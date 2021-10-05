@@ -1,0 +1,6 @@
+<mat-toolbar color="primary" [class.not-loggedin]="!isLoggedIn()">
+  <div class="spacer"></div>
+  <button (click)="logout()" mat-button>
+      Logout
+  </button>
+</mat-toolbar>
