@@ -13,15 +13,22 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { AuthenticationService } from './services/authentication.service';
 import { AuthGuardService } from './services/auth-guard.service';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { APP_CONFIG } from './config/tokens';
+import { APP_CONFIG_DATA } from './config/config';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainNavigationComponent,
     LoginComponent,
-    DashboardComponent
+    DashboardComponent,
+    SignUpComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     MatToolbarModule,
     MatButtonModule,
@@ -33,6 +40,12 @@ import { AuthGuardService } from './services/auth-guard.service';
   providers: [
     AuthenticationService,
     AuthGuardService,
+    { provide: APP_CONFIG, useValue: APP_CONFIG_DATA },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ResponseInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent]
 })
