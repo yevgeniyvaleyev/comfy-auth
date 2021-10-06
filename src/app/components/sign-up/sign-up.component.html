@@ -1,5 +1,5 @@
 <div class="sign-up-screen">
-  <form>
+  <form [formGroup]="form">
       <mat-form-field>
         <input
           type="firstName"
@@ -10,6 +10,17 @@
           placeholder="First Name"
         >
         <mat-hint>John</mat-hint>
+        <mat-error *ngIf="firstName?.touched && firstName?.invalid">
+          <div *ngIf="firstName?.errors?.required">
+            First name is required
+          </div>
+          <div *ngIf="firstName?.errors?.minlength">
+            First name has to have at least 2 letters
+          </div>
+          <div *ngIf="firstName?.errors?.correctName">
+            First name has to start with capital letter and contain only letters
+          </div>
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input
@@ -18,9 +29,20 @@
           matInput
           formControlName="lastName"
           id="lastNameControl"
-          placeholder="First Name"
+          placeholder="Last Name"
         >
         <mat-hint>Smith</mat-hint>
+        <mat-error *ngIf="lastName?.touched && lastName?.invalid">
+          <div *ngIf="lastName?.errors?.required">
+            First name is required
+          </div>
+          <div *ngIf="lastName?.errors?.minlength">
+            First name has to have at least {{ firstName?.errors?.minlength.requiredLength }} letters
+          </div>
+          <div *ngIf="lastName?.errors?.correctName">
+            First name has to start with capital letter and contain only letters
+          </div>
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input
@@ -31,7 +53,20 @@
           id="emailControl"
           placeholder="Email"
         >
-        <mat-hint>test@example.com</mat-hint>
+        <mat-hint *ngIf="email?.status === 'PENDING'">
+          pending validation...
+        </mat-hint>
+        <mat-hint *ngIf="email?.status !== 'PENDING'">
+          test@example.com
+        </mat-hint>
+        <mat-error *ngIf="email?.touched && email?.invalid">
+          <div *ngIf="email?.errors?.correctEmail">
+            Email is not valid
+          </div>
+          <div *ngIf="email?.errors?.isUniqueEmail">
+            This email is already registered
+          </div>
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input
@@ -42,6 +77,26 @@
           id="passwordControl"
           placeholder="Password"
         >
+        <mat-error *ngIf="password?.touched && password?.invalid">
+          <div *ngIf="password?.errors?.required">
+            Password is required
+          </div>
+          <div *ngIf="password?.errors?.minlength">
+            Password has to have at least {{ password?.errors?.minlength.requiredLength }} characters
+          </div>
+          <div *ngIf="password?.errors?.smallLetters">
+            Password has to have at least 1 small letter
+          </div>
+          <div *ngIf="password?.errors?.capitalLetters">
+            Password has to have at least 1 capital letter
+          </div>
+          <div *ngIf="password?.errors?.containsLastName">
+            Passwords should not contain entered last name
+          </div>
+          <div *ngIf="password?.errors?.containsFirstName">
+            Passwords should not contain entered first name
+          </div>
+        </mat-error>
       </mat-form-field>
       <button
         mat-raised-button

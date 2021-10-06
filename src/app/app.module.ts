@@ -18,6 +18,9 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { APP_CONFIG } from './config/tokens';
 import { APP_CONFIG_DATA } from './config/config';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StorageService } from './services/storage.service';
+import { UserValidators } from './validators/user.validator';
 
 @NgModule({
   declarations: [
@@ -35,11 +38,15 @@ import { APP_CONFIG_DATA } from './config/config';
     MatFormFieldModule,
     MatInputModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [
+    StorageService,
     AuthenticationService,
     AuthGuardService,
+    UserValidators,
     { provide: APP_CONFIG, useValue: APP_CONFIG_DATA },
     {
       provide: HTTP_INTERCEPTORS,

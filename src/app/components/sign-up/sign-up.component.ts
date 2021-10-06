@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FromEventTarget } from 'rxjs/internal/observable/fromEvent';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { signUpData } from 'src/app/types';
+import { UserValidators } from 'src/app/validators/user.validator';
 
 @Component({
   selector: 'app-sign-up',
@@ -11,17 +11,55 @@ import { signUpData } from 'src/app/types';
 })
 export class SignUpComponent {
 
-  constructor(private authService: AuthenticationService, private router: Router) { }
+  public form = new FormGroup({
+    firstName: new FormControl('', [
+      Validators.minLength(2),
+      UserValidators.correctName,
+      Validators.required
+    ]),
+    lastName: new FormControl('', [
+      Validators.minLength(2),
+      UserValidators.correctName,
+      Validators.required
+    ]),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(8),
+      UserValidators.isComplexPassword,
+    ]),
+    email: new FormControl('', [
+      UserValidators.correctEmail,
+      Validators.required
+    ], this.validators.isUniqueEmail())
+  }, {
+    validators: UserValidators.preventUserNamesInPassword,
+  });
 
-  signUp(event: Event) {
+  constructor(
+    private authService: AuthenticationService,
+    private router: Router,
+    private validators: UserValidators
+  ) { }
+
+  public get firstName (): AbstractControl | null {
+    return this.form.get('firstName');
+  }
+
+  public get lastName (): AbstractControl | null {
+    return this.form.get('lastName');
+  }
+
+  public get password (): AbstractControl | null {
+    return this.form.get('password');
+  }
+
+  public get email (): AbstractControl | null {
+    return this.form.get('email');
+  }
+
+  public signUp(event: Event) {
     event.preventDefault();
-    const signUpData: signUpData = {
-      firstName: 'df',
-      lastName: 'fdf',
-      email: 'dfd@dfd.comn',
-      password: 'dfd',
-    }
-    this.authService.signUp(signUpData).subscribe((d) => {
+    this.authService.signUp(this.form.value).subscribe((d) => {
       this.router.navigate(['/login']);
     });
   }

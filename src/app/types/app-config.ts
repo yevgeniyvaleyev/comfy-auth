@@ -1,7 +1,7 @@
 export interface AppConfig {
   signUpApi: string,
-  storageKeys: {
-    isAuthenticated: string,
-    recognizedEmails: string,
+  storage: {
+    authStatusKey: string,
+    emailsKey: string,
   }
 }

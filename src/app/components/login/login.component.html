@@ -1,5 +1,5 @@
 <div class="login-screen">
-  <form>
+  <form [formGroup]="form">
       <mat-form-field>
         <input
           type="email"
@@ -10,6 +10,14 @@
           placeholder="Email"
         >
         <mat-hint>test@example.com</mat-hint>
+        <mat-error *ngIf="email?.touched && email?.invalid">
+          <div *ngIf="email?.errors?.required">
+            Email is required
+          </div>
+          <div *ngIf="email?.errors?.correctEmail">
+            Invalid email
+          </div>
+        </mat-error>
       </mat-form-field>
       <mat-form-field>
         <input
@@ -20,13 +28,20 @@
           id="passwordControl"
           placeholder="Password"
         >
+        <mat-error *ngIf="password?.touched && password?.invalid">
+          Password is required
+        </mat-error>
       </mat-form-field>
+      <mat-error *ngIf="form?.errors?.loginFailed">
+        The e-mail address or password you entered was incorrect. Please try again.
+      </mat-error>
       <p>
-        Please <a [routerLink]="['/sign-up']">sign up</a> if you do not have an account yet.
+        Please <a mat-button [routerLink]="['/sign-up']">sign up</a> if you do not have an account yet.
       </p>
       <button
         mat-raised-button
         color="primary"
+        [disabled]="!form.valid"
         (click)="login()">
           Login
       </button>

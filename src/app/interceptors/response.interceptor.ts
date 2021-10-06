@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -8,30 +8,27 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { APP_CONFIG } from '../config/tokens';
-import { AppConfig } from '../types/app-config';
+import { StorageService } from '../services/storage.service';
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
-  constructor(@Inject(APP_CONFIG) private config: AppConfig) {}
+  constructor(
+    private storage: StorageService
+  ) {}
 
-  intercept(
+  public intercept(
     request: HttpRequest<unknown>,
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     return next.handle(request).pipe(
       tap((event: HttpEvent<any>) => {
-
-        // This code is for demonstration only!
+        // NOTE: This code is for _demonstration_ only!
         // It is used to enable demonstration of login validation
         if (event instanceof HttpResponse && event.url?.includes('/users')) {
           const { email } = event.body;
-          const { recognizedEmails } = this.config.storageKeys;
-          const recognisedEmails = localStorage.getItem(recognizedEmails);
-          const parsedRecognisedEmails = !!recognisedEmails ? recognisedEmails.split(',') : [];
-
-          localStorage.setItem(recognizedEmails, [...parsedRecognisedEmails, email].join(','));
+          this.storage.addEmail(email);
         }
-      }));
+      })
+    );
   }
 }
