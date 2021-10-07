@@ -7,9 +7,12 @@ import { UserValidators } from 'src/app/validators/user.validator';
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css']
+  styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
+
+  public isInProgress: boolean = false;
+  public hasRequestError: boolean = false;
 
   public form = new FormGroup({
     firstName: new FormControl('', [
@@ -59,9 +62,16 @@ export class SignUpComponent {
 
   public signUp(event: Event) {
     event.preventDefault();
-    this.authService.signUp(this.form.value).subscribe((d) => {
+    this.hasRequestError = false;
+    this.isInProgress = true;
+    this.authService.signUp(this.form.value).subscribe(() => {
+      this.isInProgress = false;
       this.router.navigate(['/login']);
+    }, () => {
+      this.hasRequestError = true;
+      this.isInProgress = false;
     });
+
   }
 
 }

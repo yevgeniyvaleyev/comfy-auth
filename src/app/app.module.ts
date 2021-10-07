@@ -4,6 +4,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -35,6 +37,8 @@ import { UserValidators } from './validators/user.validator';
     BrowserModule,
     MatToolbarModule,
     MatButtonModule,
+    MatCardModule,
+    MatIconModule,
     MatFormFieldModule,
     MatInputModule,
     AppRoutingModule,

@@ -1,0 +1,23 @@
+@import "../../../variables.scss";
+
+.logout-button {
+  display: none;
+}
+
+.loggedin {
+  .login-button,
+  .sign-up-button {
+    display: none;
+  }
+  .logout-button {
+    display: block;
+  }
+}
+
+.logo:hover {
+ color: $white;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

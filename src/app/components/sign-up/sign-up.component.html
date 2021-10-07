@@ -1,108 +1,128 @@
-<div class="sign-up-screen">
-  <form [formGroup]="form">
-      <mat-form-field>
-        <input
-          type="firstName"
-          required
-          matInput
-          formControlName="firstName"
-          id="firstNameControl"
-          placeholder="First Name"
-        >
-        <mat-hint>John</mat-hint>
-        <mat-error *ngIf="firstName?.touched && firstName?.invalid">
-          <div *ngIf="firstName?.errors?.required">
-            First name is required
-          </div>
-          <div *ngIf="firstName?.errors?.minlength">
-            First name has to have at least 2 letters
-          </div>
-          <div *ngIf="firstName?.errors?.correctName">
-            First name has to start with capital letter and contain only letters
-          </div>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          type="lastName"
-          required
-          matInput
-          formControlName="lastName"
-          id="lastNameControl"
-          placeholder="Last Name"
-        >
-        <mat-hint>Smith</mat-hint>
-        <mat-error *ngIf="lastName?.touched && lastName?.invalid">
-          <div *ngIf="lastName?.errors?.required">
-            First name is required
-          </div>
-          <div *ngIf="lastName?.errors?.minlength">
-            First name has to have at least {{ firstName?.errors?.minlength.requiredLength }} letters
-          </div>
-          <div *ngIf="lastName?.errors?.correctName">
-            First name has to start with capital letter and contain only letters
-          </div>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          type="email"
-          required
-          matInput
-          formControlName="email"
-          id="emailControl"
-          placeholder="Email"
-        >
-        <mat-hint *ngIf="email?.status === 'PENDING'">
-          pending validation...
-        </mat-hint>
-        <mat-hint *ngIf="email?.status !== 'PENDING'">
-          test@example.com
-        </mat-hint>
-        <mat-error *ngIf="email?.touched && email?.invalid">
-          <div *ngIf="email?.errors?.correctEmail">
-            Email is not valid
-          </div>
-          <div *ngIf="email?.errors?.isUniqueEmail">
-            This email is already registered
-          </div>
-        </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          type="password"
-          required
-          matInput
-          formControlName="password"
-          id="passwordControl"
-          placeholder="Password"
-        >
-        <mat-error *ngIf="password?.touched && password?.invalid">
-          <div *ngIf="password?.errors?.required">
-            Password is required
-          </div>
-          <div *ngIf="password?.errors?.minlength">
-            Password has to have at least {{ password?.errors?.minlength.requiredLength }} characters
-          </div>
-          <div *ngIf="password?.errors?.smallLetters">
-            Password has to have at least 1 small letter
-          </div>
-          <div *ngIf="password?.errors?.capitalLetters">
-            Password has to have at least 1 capital letter
-          </div>
-          <div *ngIf="password?.errors?.containsLastName">
-            Passwords should not contain entered last name
-          </div>
-          <div *ngIf="password?.errors?.containsFirstName">
-            Passwords should not contain entered first name
-          </div>
-        </mat-error>
-      </mat-form-field>
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="signUp($event)">
+<div class="row justify-content-center">
+  <mat-card class="col-md-4">
+    <form [formGroup]="form">
+      <div class="row justify-content-between">
+        <div class="col-5">
+          <mat-form-field>
+            <input
+              type="firstName"
+              required
+              matInput
+              formControlName="firstName"
+              id="firstNameControl"
+              placeholder="First Name"
+            />
+            <mat-hint>John</mat-hint>
+            <mat-error *ngIf="firstName?.touched && firstName?.invalid">
+              <div *ngIf="firstName?.errors?.required">
+                First name is required
+              </div>
+              <div *ngIf="firstName?.errors?.minlength">
+                First name has to have at least 2 letters
+              </div>
+              <div *ngIf="firstName?.errors?.correctName">
+                First name has to start with capital letter and contain only
+                letters
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-5 d-flex justify-content-end">
+          <mat-form-field>
+            <input
+              type="lastName"
+              required
+              matInput
+              formControlName="lastName"
+              id="lastNameControl"
+              placeholder="Last Name"
+            />
+            <mat-hint>Smith</mat-hint>
+            <mat-error *ngIf="lastName?.touched && lastName?.invalid">
+              <div *ngIf="lastName?.errors?.required">
+                First name is required
+              </div>
+              <div *ngIf="lastName?.errors?.minlength">
+                First name has to have at least
+                {{ firstName?.errors?.minlength.requiredLength }} letters
+              </div>
+              <div *ngIf="lastName?.errors?.correctName">
+                First name has to start with capital letter and contain only
+                letters
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+
+      <div class="row justify-content-between mb-3">
+        <div class="col-5">
+          <mat-form-field>
+            <input
+              type="email"
+              required
+              matInput
+              formControlName="email"
+              id="emailControl"
+              placeholder="Email"
+            />
+            <mat-hint *ngIf="email?.status === 'PENDING'">
+              pending validation...
+            </mat-hint>
+            <mat-hint *ngIf="email?.status !== 'PENDING'">
+              test@example.com
+            </mat-hint>
+            <mat-error *ngIf="email?.touched && email?.invalid">
+              <div *ngIf="email?.errors?.correctEmail">Email is not valid</div>
+              <div *ngIf="email?.errors?.isUniqueEmail">
+                This email is already registered
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-5 d-flex justify-content-end">
+          <mat-form-field>
+            <input
+              type="password"
+              required
+              matInput
+              formControlName="password"
+              id="passwordControl"
+              placeholder="Password"
+            />
+            <mat-error *ngIf="password?.touched && password?.invalid">
+              <div *ngIf="password?.errors?.required">Password is required</div>
+              <div *ngIf="password?.errors?.minlength">
+                Password has to have at least
+                {{ password?.errors?.minlength.requiredLength }} characters
+              </div>
+              <div *ngIf="password?.errors?.smallLetters">
+                Password has to have at least 1 small letter
+              </div>
+              <div *ngIf="password?.errors?.capitalLetters">
+                Password has to have at least 1 capital letter
+              </div>
+              <div *ngIf="password?.errors?.containsLastName">
+                Passwords should not contain entered last name
+              </div>
+              <div *ngIf="password?.errors?.containsFirstName">
+                Passwords should not contain entered first name
+              </div>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-error class="my-3" *ngIf="hasRequestError">
+        An error occured during sign up proccess, please try again later.
+      </mat-error>
+      <p class="my-3" *ngIf="isInProgress">
+        Signing in...
+      </p>
+      <div class="d-flex justify-content-center">
+        <button mat-raised-button [attr.disabled]="!isInProgress" color="primary" (click)="signUp($event)">
           Sign Up
-      </button>
+        </button>
+      </div>
     </form>
-  </div>
+  </mat-card>
+</div>

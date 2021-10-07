@@ -9,6 +9,9 @@ export interface LoginData {
   email: string,
   password: string,
 }
+export interface EmailCheckData {
+  email: string,
+}
 
 export interface SignUpResponseData {
   _id: string,

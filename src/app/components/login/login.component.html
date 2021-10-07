@@ -1,49 +1,72 @@
-<div class="login-screen">
-  <form [formGroup]="form">
-      <mat-form-field>
-        <input
-          type="email"
-          required
-          matInput
-          formControlName="email"
-          id="emailControl"
-          placeholder="Email"
-        >
-        <mat-hint>test@example.com</mat-hint>
-        <mat-error *ngIf="email?.touched && email?.invalid">
-          <div *ngIf="email?.errors?.required">
-            Email is required
+<div class="row justify-content-center">
+  <mat-card class="col-md-4">
+    <div class="login-screen">
+      <form [formGroup]="form">
+        <div class="row justify-content-between">
+          <div class="col-5">
+            <mat-form-field>
+              <input
+                type="email"
+                required
+                matInput
+                formControlName="email"
+                id="emailControl"
+                placeholder="Email"
+              />
+              <mat-hint>test@example.com</mat-hint>
+              <mat-error *ngIf="email?.touched && email?.invalid">
+                <div *ngIf="email?.errors?.required">Email is required</div>
+                <div *ngIf="email?.errors?.correctEmail">Invalid email</div>
+              </mat-error>
+            </mat-form-field>
           </div>
-          <div *ngIf="email?.errors?.correctEmail">
-            Invalid email
+          <div class="col-5 d-flex justify-content-end">
+            <mat-form-field>
+              <input
+                type="password"
+                required
+                matInput
+                formControlName="password"
+                id="passwordControl"
+                placeholder="Password"
+              />
+              <mat-error *ngIf="password?.touched && password?.invalid">
+                Password is required
+              </mat-error>
+            </mat-form-field>
           </div>
+        </div>
+        <mat-error class="my-3" *ngIf="form?.errors?.loginFailed">
+          The e-mail address or password you entered was incorrect. Please try
+          again.
         </mat-error>
-      </mat-form-field>
-      <mat-form-field>
-        <input
-          type="password"
-          required
-          matInput
-          formControlName="password"
-          id="passwordControl"
-          placeholder="Password"
-        >
-        <mat-error *ngIf="password?.touched && password?.invalid">
-          Password is required
+        <p class="my-3">
+          Please use sign up frorm if you do not have an account yet.
+        </p>
+        <mat-error class="my-3" *ngIf="hasRequestError">
+          An error occured during login proccess, please try again later.
         </mat-error>
-      </mat-form-field>
-      <mat-error *ngIf="form?.errors?.loginFailed">
-        The e-mail address or password you entered was incorrect. Please try again.
-      </mat-error>
-      <p>
-        Please <a mat-button [routerLink]="['/sign-up']">sign up</a> if you do not have an account yet.
-      </p>
-      <button
-        mat-raised-button
-        color="primary"
-        [disabled]="!form.valid"
-        (click)="login()">
-          Login
-      </button>
-    </form>
-  </div>
+        <p class="my-3" *ngIf="isInProgress">
+          Login in progress...
+        </p>
+        <div class="d-flex justify-content-center">
+          <button
+            class="mx-2"
+            mat-raised-button
+            color="primary"
+            [disabled]="!form.valid"
+            (click)="login($event)"
+          >
+            Login
+          </button>
+          <a
+            mat-raised-button
+            class="mx-2"
+            [routerLink]="['/sign-up']"
+            >Sign up</a
+          >
+        </div>
+      </form>
+    </div>
+  </mat-card>
+</div>

@@ -5,7 +5,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 @Component({
   selector: 'main-navigation',
   templateUrl: './main-navigation.component.html',
-  styleUrls: ['./main-navigation.component.css']
+  styleUrls: ['./main-navigation.component.scss']
 })
 export class MainNavigationComponent {
 

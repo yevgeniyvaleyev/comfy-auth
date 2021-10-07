@@ -7,9 +7,12 @@ import { UserValidators } from 'src/app/validators/user.validator';
 @Component({
   selector: 'login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent implements OnInit {
+
+  public hasRequestError: boolean = false;
+  public isInProgress: boolean = false;
 
   form = new FormGroup({
     password: new FormControl('', Validators.required),
@@ -39,8 +42,10 @@ export class LoginComponent implements OnInit {
     return this.form.get('password');
   }
 
-  public login () {
+  public login (event: Event) {
+    event.preventDefault();
     this.authService.login(this.form.value).subscribe((isAuthenticated) => {
+      this.isInProgress = false;
       if (isAuthenticated) {
         this.form.setErrors(null);
         const targetUrl = this.route.snapshot.queryParamMap.get('targetUrl');
@@ -48,6 +53,9 @@ export class LoginComponent implements OnInit {
       } else {
         this.form.setErrors({ loginFailed: true });
       }
+    }, () => {
+      this.hasRequestError = true;
+      this.isInProgress = false;
     })
   }
 }

@@ -24,7 +24,6 @@ export class StorageService {
     if (this.emails.includes(email)) {
       return false;
     }
-    console.log(email)
     localStorage.setItem(
       emailsKey,
       [...this.emails, email].join(',')
@@ -35,7 +34,6 @@ export class StorageService {
   public get emails(): string[] {
     const { emailsKey } = this.config.storage;
     const emailsExpression = localStorage.getItem(emailsKey);
-    console.log(emailsExpression)
     const emails = !!emailsExpression
       ? emailsExpression.split(',')
       : [];
