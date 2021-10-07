@@ -15,7 +15,7 @@ export class MainNavigationComponent {
   ) {}
 
   isLoggedIn () {
-    return this.authService.isLoggedIn();
+    return this.authService.isLoggedIn;
   }
 
   logout () {

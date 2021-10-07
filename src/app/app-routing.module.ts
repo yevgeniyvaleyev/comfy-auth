@@ -9,14 +9,20 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuardService],
-    component: DashboardComponent
+    component: DashboardComponent,
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'sign-up', component: SignUpComponent },
+  {
+    path: 'login',
+    component: LoginComponent,
+  },
+  {
+    path: 'sign-up',
+    component: SignUpComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

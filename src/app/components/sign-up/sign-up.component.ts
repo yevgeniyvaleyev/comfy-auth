@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { InputModalityDetector } from '@angular/cdk/a11y';
+import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -9,7 +10,7 @@ import { UserValidators } from 'src/app/validators/user.validator';
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.scss']
 })
-export class SignUpComponent {
+export class SignUpComponent implements OnInit {
 
   public isInProgress: boolean = false;
   public hasRequestError: boolean = false;
@@ -43,6 +44,12 @@ export class SignUpComponent {
     private router: Router,
     private validators: UserValidators
   ) { }
+
+  public ngOnInit() {
+    if (this.authService.isLoggedIn) {
+      this.router.navigate(['/']);
+    }
+  }
 
   public get firstName (): AbstractControl | null {
     return this.form.get('firstName');

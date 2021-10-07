@@ -19,6 +19,10 @@ export class AuthenticationService {
     this.isAuthenticated = this.storage.authStatus;
   }
 
+  public get isLoggedIn(): boolean {
+    return this.isAuthenticated;
+  }
+
   public signUp(data: SignUpData): Observable<any> {
     return this.http.post(this.config.api.signUp, data);
   }
@@ -41,7 +45,7 @@ export class AuthenticationService {
     );
   }
 
-  public isLoggedIn(): Observable<boolean> {
+  public verifyLoginStatus(): Observable<boolean> {
     return this.http.post(this.config.api.verifyAuth, {}).pipe(
       map((response: any) => {
         this.isAuthenticated = !!response?.success;
