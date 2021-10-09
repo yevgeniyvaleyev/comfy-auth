@@ -2,6 +2,6 @@ export const emailPattern = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)
 
 export const namePattern = /^[A-Z][a-z]+$/;
 
-export const passwordSmallLetters = /.*[a-z].*/;
+export const smallLettersPattern = /.*[a-z].*/;
 
-export const passwordCapitalLetters = /.*[A-Z].*/;
+export const capitalLettersPattern = /.*[A-Z].*/;

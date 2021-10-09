@@ -1,4 +1,3 @@
-import { InputModalityDetector } from '@angular/cdk/a11y';
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -29,7 +28,7 @@ export class SignUpComponent implements OnInit {
     password: new FormControl('', [
       Validators.required,
       Validators.minLength(8),
-      UserValidators.isComplexPassword,
+      UserValidators.upperAndLowerCase,
     ]),
     email: new FormControl('', [
       UserValidators.correctEmail,

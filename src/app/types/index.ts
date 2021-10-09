@@ -12,6 +12,9 @@ export interface LoginData {
 export interface EmailCheckData {
   email: string,
 }
+export interface StateCheckResponseData {
+  success: boolean,
+}
 
 export interface SignUpResponseData {
   _id: string,
@@ -19,3 +22,4 @@ export interface SignUpResponseData {
   firstName: string,
   lastName: string
 }
+

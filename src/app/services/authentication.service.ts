@@ -4,8 +4,7 @@ import { map } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { APP_CONFIG } from '../config/tokens';
 import { AppConfig } from '../types/app-config';
-import { LoginData, SignUpData } from '../types';
-import { StorageService } from './storage.service';
+import { LoginData, SignUpData, SignUpResponseData, StateCheckResponseData } from '../types';
 
 @Injectable()
 export class AuthenticationService {
@@ -13,23 +12,20 @@ export class AuthenticationService {
 
   constructor(
     private http: HttpClient,
-    private storage: StorageService,
     @Inject(APP_CONFIG) private config: AppConfig
-  ) {
-    this.isAuthenticated = this.storage.authStatus;
-  }
+  ) {}
 
   public get isLoggedIn(): boolean {
     return this.isAuthenticated;
   }
 
-  public signUp(data: SignUpData): Observable<any> {
-    return this.http.post(this.config.api.signUp, data);
+  public signUp(data: SignUpData): Observable<SignUpResponseData> {
+    return this.http.post<SignUpResponseData>(this.config.api.signUp, data);
   }
 
   public login(loginData: LoginData): Observable<boolean> {
-    return this.http.post(this.config.api.login, loginData).pipe(
-      map((response: any) => {
+    return this.http.post<StateCheckResponseData>(this.config.api.login, loginData).pipe(
+      map((response: StateCheckResponseData) => {
         this.isAuthenticated = !!response?.success;
         return this.isAuthenticated;
       })
@@ -37,8 +33,8 @@ export class AuthenticationService {
   }
 
   public logout(): Observable<boolean> {
-    return this.http.post(this.config.api.logout, {}).pipe(
-      map((response: any) => {
+    return this.http.post<StateCheckResponseData>(this.config.api.logout, {}).pipe(
+      map((response: StateCheckResponseData) => {
         this.isAuthenticated = !response?.success;
         return this.isAuthenticated;
       })
@@ -46,8 +42,8 @@ export class AuthenticationService {
   }
 
   public verifyLoginStatus(): Observable<boolean> {
-    return this.http.post(this.config.api.verifyAuth, {}).pipe(
-      map((response: any) => {
+    return this.http.post<StateCheckResponseData>(this.config.api.verifyAuth, {}).pipe(
+      map((response: StateCheckResponseData) => {
         this.isAuthenticated = !!response?.success;
         return this.isAuthenticated;
       })
@@ -61,7 +57,7 @@ export class AuthenticationService {
    */
   public checkEmailUniqueness(email: string): Observable<boolean> {
     return this.http
-      .post(this.config.api.checkEmail, { email })
-      .pipe(map((response: any) => !!response.success));
+      .post<StateCheckResponseData>(this.config.api.checkEmail, { email })
+      .pipe(map((response: StateCheckResponseData) => !!response.success));
   }
 }

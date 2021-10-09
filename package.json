@@ -1,6 +1,7 @@
 {
   "name": "comfy-auth",
   "version": "0.0.0",
+  "author": "Yevgeniy Valeyev",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

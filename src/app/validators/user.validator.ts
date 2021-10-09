@@ -1,8 +1,8 @@
 import {
   emailPattern,
   namePattern,
-  passwordCapitalLetters,
-  passwordSmallLetters,
+  capitalLettersPattern,
+  smallLettersPattern,
 } from './patterns';
 import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { Injectable } from '@angular/core';
@@ -25,15 +25,15 @@ export class UserValidators {
     };
   }
 
-  public static isComplexPassword(
+  public static upperAndLowerCase(
     control: AbstractControl
   ): ValidationErrors | null {
-    if (!passwordCapitalLetters.test(control.value)) {
+    if (!capitalLettersPattern.test(control.value)) {
       return {
         capitalLetters: true,
       };
     }
-    if (!passwordSmallLetters.test(control.value)) {
+    if (!smallLettersPattern.test(control.value)) {
       return {
         smallLetters: true,
       };
@@ -71,7 +71,7 @@ export class UserValidators {
   }
 
   public isUniqueEmail() {
-    return (control: AbstractControl): Observable<null | any> =>
+    return (control: AbstractControl): Observable<null | { isUniqueEmail: boolean }> =>
       this.authService
         .checkEmailUniqueness(control.value)
         .pipe(
