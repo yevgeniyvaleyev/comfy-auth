@@ -22,9 +22,9 @@ __Custom Validators__
 - `isUniqueEmail` _async_ validator which does an API call to check whether entered email is already registered;
 
 ## Authentication
-It is only possible 
-You can only login by email used in sign up form and password (random). 
-The Authentication is made for demonstration purpose and does not contain real API which would allow real secure authentication.
+It is only possible to login by email used in sign up form and password (random). 
+The Authentication is made for demonstration purpose and does not contain real API which would allow real secure authentication. 
+Protection of certain routes of the application is done by authentication guards and authentication service.
 
 ## Mock API
 To make this application as close as possible to production ready state it was decided to use request interceptor to emulate missing APIs. 
