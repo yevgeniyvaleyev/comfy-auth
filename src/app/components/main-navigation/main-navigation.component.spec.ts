@@ -2,6 +2,7 @@ import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 import { MainNavigationComponent } from './main-navigation.component';
@@ -13,12 +14,12 @@ describe('MainNavigationComponent', () => {
   let mockRouter: jasmine.SpyObj<Router>;
 
   beforeEach(async () => {
-    mockAuthenticationService = jasmine.createSpyObj('AuthenticationService', [
-      'logout',
-    ], { isLoggedIn: true });
-    mockRouter = jasmine.createSpyObj('Router', [
-      'navigate',
-    ]);
+    mockAuthenticationService = jasmine.createSpyObj(
+      'AuthenticationService',
+      ['logout'],
+      { isLoggedIn: true }
+    );
+    mockRouter = jasmine.createSpyObj('Router', ['navigate']);
     await TestBed.configureTestingModule({
       declarations: [MainNavigationComponent],
       providers: [
@@ -41,15 +42,25 @@ describe('MainNavigationComponent', () => {
 
   describe('logout', () => {
     it('should navigate to /login', () => {
-      mockAuthenticationService.logout.and.returnValue(of(false));
+      mockAuthenticationService.logout.and.returnValue(
+        of(false).pipe(
+          finalize(() => {
+            expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+          })
+        )
+      );
       component.logout();
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
     });
 
     it('should not navigate at all', () => {
-      mockAuthenticationService.logout.and.returnValue(of(true));
+      mockAuthenticationService.logout.and.returnValue(
+        of(true).pipe(
+          finalize(() => {
+            expect(mockRouter.navigate).not.toHaveBeenCalled();
+          })
+        )
+      );
       component.logout();
-      expect(mockRouter.navigate).not.toHaveBeenCalled();
     });
   });
 
