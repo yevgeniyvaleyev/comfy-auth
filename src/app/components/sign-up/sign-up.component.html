@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <mat-card class="col-md-4">
-    <form [formGroup]="form">
+    <form [formGroup]="form" (ngSubmit)="signUp()">
       <div class="row justify-content-between">
         <div class="col-5">
           <mat-form-field>
@@ -115,11 +115,14 @@
       <mat-error class="my-3" *ngIf="hasRequestError">
         An error occured during sign up proccess, please try again later.
       </mat-error>
-      <p class="my-3" *ngIf="isInProgress">
-        Signing in...
-      </p>
+      <p class="my-3" *ngIf="isInProgress">Signing in...</p>
       <div class="d-flex justify-content-center">
-        <button mat-raised-button [attr.disabled]="!isInProgress" color="primary" (click)="signUp($event)">
+        <button
+          mat-raised-button
+          type="submit"
+          [disabled]="isInProgress"
+          color="primary"
+        >
           Sign Up
         </button>
       </div>

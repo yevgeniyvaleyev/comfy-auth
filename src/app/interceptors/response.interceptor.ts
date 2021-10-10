@@ -52,13 +52,15 @@ export class ResponseInterceptor implements HttpInterceptor {
     if (request?.url.includes(this.config.api.checkEmail)) {
       const data = request.body as EmailCheckData;
       const isUnique = !this.storage.emails.includes(data.email);
-      // 'delay' is used to simulate network delay
       return of(
         new HttpResponse({
           status: 200,
           body: { success: isUnique },
         } as any)
-      ).pipe(delay(1500));
+      ).pipe(
+        // 'delay' is used to emulate network delay
+        delay(1500)
+      );
     }
 
     // Emulates authentication check API response.
@@ -76,11 +78,11 @@ export class ResponseInterceptor implements HttpInterceptor {
       tap((event: HttpEvent<any>) => {
         // NOTE: This code is for _demonstration_ only!
         // It is used to enable demonstration of login validation
-        if (event instanceof HttpResponse && event.url?.includes('/users')) {
+        if (event instanceof HttpResponse && request.url?.includes(this.config.api.signUp)) {
           const { email } = event.body;
           this.storage.addEmail(email);
         }
-      })
+      }),
     );
   }
 }

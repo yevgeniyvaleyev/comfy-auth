@@ -1,8 +1,9 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { SignUpResponseData } from 'src/app/types';
 import { UserValidators } from 'src/app/validators/user.validator';
@@ -80,9 +81,13 @@ describe('SignUpComponent', () => {
         of({ isUniqueEmail: true })
       );
       component.form.controls.email.clearAsyncValidators();
-      component.form.controls.email.setAsyncValidators(mockUserValidators.isUniqueEmail())
+      component.form.controls.email.setAsyncValidators(
+        mockUserValidators.isUniqueEmail()
+      );
       component.form.controls.email.setValue('a.a@sd.com');
-      expect(component.form.controls.email.hasError('isUniqueEmail')).toBeTrue();
+      expect(
+        component.form.controls.email.hasError('isUniqueEmail')
+      ).toBeTrue();
     });
   });
 
@@ -156,12 +161,16 @@ describe('SignUpComponent', () => {
 
     it('should fail if firstName is too short', () => {
       component.form.controls.firstName.setValue('A');
-      expect(component.form.controls.firstName.hasError('minlength')).toBeTrue();
+      expect(
+        component.form.controls.firstName.hasError('minlength')
+      ).toBeTrue();
     });
 
     it('should fail if firstName has incorrect structure', () => {
       component.form.controls.firstName.setValue('bakker');
-      expect(component.form.controls.firstName.hasError('correctName')).toBeTrue();
+      expect(
+        component.form.controls.firstName.hasError('correctName')
+      ).toBeTrue();
     });
   });
 
@@ -184,28 +193,40 @@ describe('SignUpComponent', () => {
 
     it('should fail if lastName has incorrect structure', () => {
       component.form.controls.lastName.setValue('bakker');
-      expect(component.form.controls.lastName.hasError('correctName')).toBeTrue();
+      expect(
+        component.form.controls.lastName.hasError('correctName')
+      ).toBeTrue();
     });
   });
 
   describe('signUp', () => {
-    const fakeEvent = {
-      preventDefault: () => {},
-    } as Event;
-
     beforeEach(() => {
       mockRouter.navigate.calls.reset();
     });
 
-    it('should navigate to target url', () => {
+    it('should navigate to target url if form valid', () => {
       const fakeSignUpResponseData = {
         email: 'fake@a.com',
       } as SignUpResponseData;
+      component.form = {
+        invalid: false,
+      } as FormGroup;
+      
       mockAuthenticationService.signUp.and.returnValue(
-        of(fakeSignUpResponseData)
+        of(fakeSignUpResponseData).pipe(
+          finalize(() => {
+            expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+          })
+        )
       );
-      component.signUp(fakeEvent);
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+      component.signUp();
+    });
+
+    it('should return undefined if form is invalid', () => {
+      component.form = {
+        invalid: true,
+      } as FormGroup;
+      expect(component.signUp()).toBeUndefined();
     });
   });
 });

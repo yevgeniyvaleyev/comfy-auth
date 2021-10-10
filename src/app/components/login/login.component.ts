@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { finalize } from 'rxjs/operators';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { UserValidators } from 'src/app/validators/user.validator';
 
@@ -41,23 +42,33 @@ export class LoginComponent implements OnInit {
     return this.form.get('password');
   }
 
-  public login(event: Event) {
-    event.preventDefault();
-    this.authService.login(this.form.value).subscribe(
-      (isAuthenticated) => {
-        this.isInProgress = false;
-        if (isAuthenticated) {
-          this.form.setErrors(null);
-          const targetUrl = this.route.snapshot.queryParamMap.get('targetUrl');
-          this.router.navigate([targetUrl || '/']);
-        } else {
-          this.form.setErrors({ loginFailed: true });
+  public login() {
+    if (this.form.invalid) {
+      return;
+    }
+    this.hasRequestError = false;
+    this.isInProgress = true;
+    this.authService
+      .login(this.form.value)
+      .pipe(
+        finalize(() => {
+          this.isInProgress = false;
+        })
+      )
+      .subscribe(
+        (isAuthenticated) => {
+          if (isAuthenticated) {
+            this.form.setErrors(null);
+            const targetUrl =
+              this.route.snapshot.queryParamMap.get('targetUrl');
+            this.router.navigate([targetUrl || '/']);
+          } else {
+            this.form.setErrors({ loginFailed: true });
+          }
+        },
+        () => {
+          this.hasRequestError = true;
         }
-      },
-      () => {
-        this.hasRequestError = true;
-        this.isInProgress = false;
-      }
-    );
+      );
   }
 }

@@ -1,7 +1,7 @@
 <div class="row justify-content-center">
   <mat-card class="col-md-4">
     <div class="login-screen">
-      <form [formGroup]="form">
+      <form [formGroup]="form" (ngSubmit)="login()">
         <div class="row justify-content-between">
           <div class="col-5">
             <mat-form-field>
@@ -53,9 +53,9 @@
           <button
             class="mx-2"
             mat-raised-button
+            button="submit"
             color="primary"
-            [disabled]="!form.valid"
-            (click)="login($event)"
+            [disabled]="isInProgress"
           >
             Login
           </button>
