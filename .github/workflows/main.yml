@@ -9,7 +9,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-
       - name: Cache node modules
         uses: actions/cache@v1
         with:
@@ -24,10 +23,17 @@ jobs:
       - name: install and build
         run: |
           npm i
-          npm run build:prod
+          npm run build
       - name: tests
         run: npm run test:prod
-      - name: Deploy to Heroku
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - uses: actions/checkout@v1
+      - name: deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
           heroku_api_key: ${{secrets.HEROKU_API_KEY}}
