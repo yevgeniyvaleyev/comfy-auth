@@ -19,8 +19,8 @@ export class MainNavigationComponent {
   }
 
   logout () {
-    this.authService.logout().subscribe((isAuthenticated) => {
-      if (!isAuthenticated) {
+    this.authService.logout().subscribe((isLoggedOut) => {
+      if (isLoggedOut) {
         this.router.navigate(['/login']);
       }
     });

@@ -43,7 +43,7 @@ describe('MainNavigationComponent', () => {
   describe('logout', () => {
     it('should navigate to /login', () => {
       mockAuthenticationService.logout.and.returnValue(
-        of(false).pipe(
+        of(true).pipe(
           finalize(() => {
             expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
           })
@@ -54,7 +54,7 @@ describe('MainNavigationComponent', () => {
 
     it('should not navigate at all', () => {
       mockAuthenticationService.logout.and.returnValue(
-        of(true).pipe(
+        of(false).pipe(
           finalize(() => {
             expect(mockRouter.navigate).not.toHaveBeenCalled();
           })
