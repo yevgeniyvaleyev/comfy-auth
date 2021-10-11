@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import { APP_CONFIG } from '../config/tokens';
 import { AppConfig } from '../types/app-config';
@@ -33,9 +33,9 @@ export class AuthenticationService {
     return this.http
       .post<StateCheckResponseData>(this.config.api.login, loginData)
       .pipe(
-        map((response: StateCheckResponseData) => {
-          this.isAuthenticated = !!response?.success;
-          return this.isAuthenticated;
+        map(this.getSuccessState),
+        tap((isLoggedIn: boolean) => {
+          this.isAuthenticated = isLoggedIn;
         })
       );
   }
@@ -44,9 +44,9 @@ export class AuthenticationService {
     return this.http
       .post<StateCheckResponseData>(this.config.api.logout, {})
       .pipe(
-        map((response: StateCheckResponseData) => {
-          this.isAuthenticated = !response?.success;
-          return this.isAuthenticated;
+        map(this.getSuccessState),
+        tap((isLoggedOut: boolean) => {
+          this.isAuthenticated = !isLoggedOut;
         })
       );
   }
@@ -55,9 +55,9 @@ export class AuthenticationService {
     return this.http
       .post<StateCheckResponseData>(this.config.api.verifyAuth, {})
       .pipe(
-        map((response: StateCheckResponseData) => {
-          this.isAuthenticated = !!response?.success;
-          return this.isAuthenticated;
+        map(this.getSuccessState),
+        tap((isValid: boolean) => {
+          this.isAuthenticated = isValid;
         })
       );
   }
@@ -70,6 +70,10 @@ export class AuthenticationService {
   public checkEmailUniqueness(email: string): Observable<boolean> {
     return this.http
       .post<StateCheckResponseData>(this.config.api.checkEmail, { email })
-      .pipe(map((response: StateCheckResponseData) => !!response.success));
+      .pipe(map(this.getSuccessState));
+  }
+
+  private getSuccessState (response: StateCheckResponseData): boolean {
+    return !!response?.success;
   }
 }

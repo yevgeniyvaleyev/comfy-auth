@@ -71,9 +71,9 @@ describe('AuthenticationService', () => {
 
   it('should return logout data and set authentication status', (done) => {
     const responseData = { success: true } as StateCheckResponseData;
-    service.logout().subscribe((authStatus: boolean) => {
+    service.logout().subscribe((isLoggedOut: boolean) => {
       // if logout response is successful the authentication state is false
-      expect(authStatus).toBeFalse();
+      expect(isLoggedOut).toBeTrue();
       expect(service.isLoggedIn).toBeFalse();
       done();
     });
@@ -91,20 +91,6 @@ describe('AuthenticationService', () => {
       done();
     });
     const req = httpMock.expectOne(mockConfig.api.verifyAuth);
-    expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual({});
-    req.flush(responseData);
-  });
-
-  it('should return logout data and set authentication status', (done) => {
-    const responseData = { success: true } as StateCheckResponseData;
-    service.logout().subscribe((authStatus: boolean) => {
-      // if logout response is successful the authentication state is false
-      expect(authStatus).toBeFalse();
-      expect(service.isLoggedIn).toBeFalse();
-      done();
-    });
-    const req = httpMock.expectOne(mockConfig.api.logout);
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual({});
     req.flush(responseData);
