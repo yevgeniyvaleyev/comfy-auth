@@ -10,6 +10,8 @@ The application contains of:
 - __dashboard__ screen, appears when user successfully logged in and congratulates the user with this fact.
 - __navigation__ has action buttons to login, sign up and logout.
 
+## Demo
+Please check out deployed application at [comfy-auth.herokuapp.com](https://comfy-auth.herokuapp.com/)
 ## Form validation
 Login and sign up forms contain various of validators like standard (`required`, `minLength` etc) and custom
 synchronous and asynchronous validators. 
