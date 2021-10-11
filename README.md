@@ -5,8 +5,8 @@
 This application demonstrates possible implementation of authentication functionality 
 in client app using Angular framework.
 The application contains of:
-- __sign up__ screen, which allows user to fill, validate and send a sign up form. 
-- __login__ screen, allows user to login using registered email and password.
+- __sign up__ (`/sign-up`) screen, which allows user to fill, validate and send a sign up form. 
+- __login__ (`/login`) screen, allows user to login using registered email and password.
 - __dashboard__ screen, appears when user successfully logged in and congratulates the user with this fact.
 - __navigation__ has action buttons to login, sign up and logout.
 
