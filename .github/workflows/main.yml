@@ -25,21 +25,12 @@ jobs:
         run: |
           npm i
           npm run build
-
-  test:
-    runs-on: ubuntu-latest
-    needs: build
-    strategy:
-      matrix:
-        node-version: [14.x]
-    steps:
       - name: tests
         run: npm run test:prod
 
   deploy:
     runs-on: ubuntu-latest
-    if: always()
-    needs: [build, test]
+    needs: build
 
     steps:
       - name: deploy
