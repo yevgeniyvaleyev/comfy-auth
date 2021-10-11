@@ -9,7 +9,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v1
-
       - name: Cache node modules
         uses: actions/cache@v1
         with:
@@ -33,6 +32,7 @@ jobs:
     needs: build
 
     steps:
+      - uses: actions/checkout@v1
       - name: deploy
         uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
         with:
