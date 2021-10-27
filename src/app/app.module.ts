@@ -34,7 +34,7 @@ import { UserValidators } from './validators/user.validator';
   ],
   imports: [
     HttpClientModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     MatToolbarModule,
     MatButtonModule,
     MatCardModule,
