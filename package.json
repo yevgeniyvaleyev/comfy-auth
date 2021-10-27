@@ -17,7 +17,7 @@
     "test:prod": "ng test --browsers=ChromeHeadless --watch=false --code-coverage",
     "dev:ssr": "ng run comfy-auth:serve-ssr",
     "serve:ssr": "node dist/comfy-auth/server/main.js",
-    "build:ssr": "ng build && ng run comfy-auth:server",
+    "build:ssr": "ng build && ng run comfy-auth:server:production",
     "prerender": "ng run comfy-auth:prerender"
   },
   "private": true,
