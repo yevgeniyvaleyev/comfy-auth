@@ -1,4 +1,5 @@
-import { Inject, Injectable } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { APP_CONFIG } from '../config/tokens';
 import { AppConfig } from '../types/app-config';
 
@@ -6,7 +7,10 @@ import { AppConfig } from '../types/app-config';
   providedIn: 'root',
 })
 export class StorageService {
-  constructor(@Inject(APP_CONFIG) private config: AppConfig) {}
+  constructor(
+    @Inject(APP_CONFIG) private config: AppConfig,
+    @Inject(PLATFORM_ID) private platformId: Object,
+    ) {}
 
   public set authStatus(isAuthenticated: boolean) {
     const { authStatusKey } = this.config.storage;
@@ -15,6 +19,10 @@ export class StorageService {
 
   public get authStatus(): boolean {
     const { authStatusKey } = this.config.storage;
+    if (!isPlatformBrowser(this.platformId)) {
+      // needed for SSR
+      return false;
+    }
     return localStorage.getItem(authStatusKey) === 'true';
   }
 
