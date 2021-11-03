@@ -9,6 +9,10 @@ import { SignUpResponseData } from 'src/app/types';
 import { UserValidators } from 'src/app/auth/validators/user.validator';
 
 import { SignUpComponent } from './sign-up.component';
+import { AuthModule } from './auth.module';
+import { SharedModule } from '../shared/shared.module';
+import { HttpClientModule } from '@angular/common/http';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 describe('SignUpComponent', () => {
   let component: SignUpComponent;
@@ -25,13 +29,19 @@ describe('SignUpComponent', () => {
       { isLoggedIn: true }
     );
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
-    mockRoute = jasmine.createSpyObj('ActivatedRoute', []);
+    mockRoute = jasmine.createSpyObj('ActivatedRoute', [], {
+      snapshot: {
+        queryParamMap: {
+          get: () => 'fake_target_url',
+        },
+      },
+    });
     mockUserValidators = jasmine.createSpyObj('UserValidators', [
       'isUniqueEmail',
     ]);
     await TestBed.configureTestingModule({
       declarations: [SignUpComponent],
-      imports: [ReactiveFormsModule, FormsModule],
+      imports: [SharedModule, AuthModule, BrowserAnimationsModule],
       providers: [
         { provide: AuthenticationService, useValue: mockAuthenticationService },
         { provide: Router, useValue: mockRouter },
@@ -218,7 +228,9 @@ describe('SignUpComponent', () => {
       mockAuthenticationService.signUp.and.returnValue(
         of(fakeSignUpResponseData).pipe(
           finalize(() => {
-            expect(mockRouter.navigate).toHaveBeenCalledWith(['login'], { relativeTo: mockRoute });
+            expect(mockRouter.navigate).toHaveBeenCalledWith(['login'], {
+              relativeTo: mockRoute,
+            });
           })
         )
       );
