@@ -5,10 +5,10 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UserValidators } from 'src/app/validators/user.validator';
+import { UserValidators } from 'src/app/auth/validators/user.validator';
+import { AuthenticationService } from './authentication.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -50,7 +50,8 @@ export class SignUpComponent implements OnInit {
   constructor(
     private authService: AuthenticationService,
     private router: Router,
-    private validators: UserValidators
+    private validators: UserValidators,
+    private route: ActivatedRoute
   ) {}
 
   public ngOnInit() {
@@ -90,7 +91,7 @@ export class SignUpComponent implements OnInit {
       )
       .subscribe(
         () => {
-          this.router.navigate(['/login']);
+          this.router.navigate(['../login'], { relativeTo: this.route });
         },
         () => {
           this.hasRequestError = true;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/auth/authentication.service';
 
 @Component({
   selector: 'main-navigation',
@@ -21,7 +21,7 @@ export class MainNavigationComponent {
   logout () {
     this.authService.logout().subscribe((isLoggedOut) => {
       if (isLoggedOut) {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/auth/login']);
       }
     });
   }

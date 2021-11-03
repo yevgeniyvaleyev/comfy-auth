@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AbstractControl } from '@angular/forms';
 import { of } from 'rxjs';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../authentication.service';
 import { UserValidators } from './user.validator';
 
 describe('AuthGuardService', () => {
