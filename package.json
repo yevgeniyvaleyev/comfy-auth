@@ -8,7 +8,7 @@
   },
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4201",
     "build": "npm run build:ssr",
     "build:prod": "ng build --prod",
     "heroku-postbuild": "npm run build:prod",

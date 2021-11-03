@@ -1,12 +1,12 @@
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/auth/authentication.service';
 import { SignUpResponseData } from 'src/app/types';
-import { UserValidators } from 'src/app/validators/user.validator';
+import { UserValidators } from 'src/app/auth/validators/user.validator';
 
 import { SignUpComponent } from './sign-up.component';
 
@@ -15,6 +15,7 @@ describe('SignUpComponent', () => {
   let fixture: ComponentFixture<SignUpComponent>;
   let mockAuthenticationService: jasmine.SpyObj<AuthenticationService>;
   let mockRouter: jasmine.SpyObj<Router>;
+  let mockRoute: jasmine.SpyObj<ActivatedRoute>;
   let mockUserValidators: jasmine.SpyObj<UserValidators>;
 
   beforeEach(async () => {
@@ -24,6 +25,7 @@ describe('SignUpComponent', () => {
       { isLoggedIn: true }
     );
     mockRouter = jasmine.createSpyObj('Router', ['navigate']);
+    mockRoute = jasmine.createSpyObj('ActivatedRoute', []);
     mockUserValidators = jasmine.createSpyObj('UserValidators', [
       'isUniqueEmail',
     ]);
@@ -33,6 +35,7 @@ describe('SignUpComponent', () => {
       providers: [
         { provide: AuthenticationService, useValue: mockAuthenticationService },
         { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: mockRoute },
         { provide: UserValidators, useValue: mockUserValidators },
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA],
@@ -211,11 +214,11 @@ describe('SignUpComponent', () => {
       component.form = {
         invalid: false,
       } as FormGroup;
-      
+
       mockAuthenticationService.signUp.and.returnValue(
         of(fakeSignUpResponseData).pipe(
           finalize(() => {
-            expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+            expect(mockRouter.navigate).toHaveBeenCalledWith(['login'], { relativeTo: mockRoute });
           })
         )
       );

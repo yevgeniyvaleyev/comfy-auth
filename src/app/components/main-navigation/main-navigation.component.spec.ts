@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/auth/authentication.service';
 
 import { MainNavigationComponent } from './main-navigation.component';
 
@@ -41,11 +41,11 @@ describe('MainNavigationComponent', () => {
   });
 
   describe('logout', () => {
-    it('should navigate to /login', () => {
+    it('should navigate to /auth/login', () => {
       mockAuthenticationService.logout.and.returnValue(
         of(true).pipe(
           finalize(() => {
-            expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+            expect(mockRouter.navigate).toHaveBeenCalledWith(['/auth/login']);
           })
         )
       );
