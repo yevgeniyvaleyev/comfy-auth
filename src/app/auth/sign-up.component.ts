@@ -91,7 +91,7 @@ export class SignUpComponent implements OnInit {
       )
       .subscribe(
         () => {
-          this.router.navigate(['login'], { relativeTo: this.route });
+          this.router.navigate(['../login'], { relativeTo: this.route });
         },
         () => {
           this.hasRequestError = true;

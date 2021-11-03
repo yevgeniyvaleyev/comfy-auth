@@ -228,7 +228,7 @@ describe('SignUpComponent', () => {
       mockAuthenticationService.signUp.and.returnValue(
         of(fakeSignUpResponseData).pipe(
           finalize(() => {
-            expect(mockRouter.navigate).toHaveBeenCalledWith(['login'], {
+            expect(mockRouter.navigate).toHaveBeenCalledWith(['../login'], {
               relativeTo: mockRoute,
             });
           })

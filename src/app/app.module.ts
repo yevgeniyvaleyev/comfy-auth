@@ -5,13 +5,11 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MainNavigationComponent } from './components/main-navigation/main-navigation.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { ResponseInterceptor } from './interceptors/response.interceptor';
+import { HttpClientModule } from '@angular/common/http';
 import { APP_CONFIG } from './config/tokens';
 import { APP_CONFIG_DATA } from './config/config';
-import { StorageService } from './services/storage.service';
-import { UserValidators } from './auth/validators/user.validator';
 import { SharedModule } from './shared/shared.module';
+import { BackendMockModule } from './backend-mock/backend-mock.module';
 
 @NgModule({
   declarations: [
@@ -25,15 +23,10 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
     BrowserAnimationsModule,
     SharedModule,
+    BackendMockModule,
   ],
   providers: [
-    StorageService,
     { provide: APP_CONFIG, useValue: APP_CONFIG_DATA },
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: ResponseInterceptor,
-      multi: true
-    }
   ],
   bootstrap: [AppComponent]
 })
