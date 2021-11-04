@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/auth/authentication.service';
+import { AuthenticationService } from '../auth/authentication.service';
 
 import { MainNavigationComponent } from './main-navigation.component';
 
