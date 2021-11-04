@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { APP_CONFIG } from '../config/tokens';
+import { APP_CONFIG } from '../core/config/tokens';
 import { LoginData, SignUpData, SignUpResponseData, StateCheckResponseData } from '../types';
 
 

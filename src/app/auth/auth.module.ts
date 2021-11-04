@@ -15,8 +15,6 @@ import { UserValidators } from "./validators/user.validator";
     SignUpComponent,
   ],
   imports: [
-    CommonModule,
-    FormsModule,
     AuthRoutingModule,
     SharedModule,
   ],

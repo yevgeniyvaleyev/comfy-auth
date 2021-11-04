@@ -1,4 +1,4 @@
-import { AppConfig } from '../types/app-config';
+import { AppConfig } from '../../types/app-config';
 
 export const APP_CONFIG_DATA: AppConfig = {
   api: {
