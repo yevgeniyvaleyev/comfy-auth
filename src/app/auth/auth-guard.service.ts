@@ -8,7 +8,9 @@ import {
 import { tap } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthGuardService implements CanActivate {
   constructor(
     private router: Router,
@@ -19,7 +21,7 @@ export class AuthGuardService implements CanActivate {
     return this.authService.verifyLoginStatus().pipe(
       tap((isAuthenticated: boolean) => {
         if (!isAuthenticated) {
-          this.router.navigate(['/login'], {
+          this.router.navigate(['/auth/login'], {
             queryParams: {
               targetUrl: state.url,
             },

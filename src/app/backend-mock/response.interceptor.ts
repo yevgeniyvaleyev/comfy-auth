@@ -8,10 +8,10 @@ import {
 } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
-import { StorageService } from '../services/storage.service';
 import { EmailCheckData, LoginData } from '../types';
 import { APP_CONFIG } from '../config/tokens';
 import { AppConfig } from '../types/app-config';
+import { StorageService } from './storage.service';
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {

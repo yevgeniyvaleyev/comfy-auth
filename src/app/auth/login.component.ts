@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UserValidators } from 'src/app/validators/user.validator';
+import { UserValidators } from 'src/app/auth/validators/user.validator';
+import { AuthenticationService } from './authentication.service';
 
 @Component({
   selector: 'login',

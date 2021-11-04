@@ -6,7 +6,7 @@ import {
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { APP_CONFIG } from '../config/tokens';
-import { StorageService } from '../services/storage.service';
+import { StorageService } from './storage.service';
 import { LoginData, SignUpData, SignUpResponseData, StateCheckResponseData } from '../types';
 
 import { ResponseInterceptor } from './response.interceptor';

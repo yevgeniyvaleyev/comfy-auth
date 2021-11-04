@@ -49,7 +49,7 @@ describe('AuthGuardService', () => {
         },
       }
       service.canActivate(fakeActivatedRoute, fakeRouteStateRoute).subscribe(() => {
-        expect(mockRouter.navigate).toHaveBeenCalledWith(['/login'], navigateConfig);
+        expect(mockRouter.navigate).toHaveBeenCalledWith(['/auth/login'], navigateConfig);
         done();
       });
     });

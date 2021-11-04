@@ -11,7 +11,9 @@ import {
   StateCheckResponseData,
 } from '../types';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthenticationService {
   private isAuthenticated = false;
 

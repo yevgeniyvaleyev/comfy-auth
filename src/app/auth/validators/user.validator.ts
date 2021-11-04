@@ -8,7 +8,7 @@ import { AbstractControl, ValidationErrors } from '@angular/forms';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { AuthenticationService } from '../services/authentication.service';
+import { AuthenticationService } from '../authentication.service';
 
 @Injectable()
 export class UserValidators {
