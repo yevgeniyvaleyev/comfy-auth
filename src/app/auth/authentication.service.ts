@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
-import { APP_CONFIG } from '../core/config/tokens';
+import { APP_CONFIG } from '../core/config';
 import { AppConfig } from '../types/app-config';
 import {
   LoginData,
