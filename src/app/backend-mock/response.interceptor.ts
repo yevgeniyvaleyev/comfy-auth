@@ -9,7 +9,7 @@ import {
 import { Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { EmailCheckData, LoginData } from '../types';
-import { APP_CONFIG } from '../core/config/tokens';
+import { APP_CONFIG } from '../core/config';
 import { AppConfig } from '../types/app-config';
 import { StorageService } from './storage.service';
 

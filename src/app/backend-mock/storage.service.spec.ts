@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { APP_CONFIG } from '../core/config/tokens';
+import { APP_CONFIG } from '../core/config';
 
 import { StorageService } from './storage.service';
 

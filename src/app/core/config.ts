@@ -1,4 +1,6 @@
-import { AppConfig } from '../../types/app-config';
+
+import { AppConfig } from '../types/app-config';
+import { InjectionToken } from '@angular/core';
 
 export const APP_CONFIG_DATA: AppConfig = {
   api: {
@@ -13,3 +15,5 @@ export const APP_CONFIG_DATA: AppConfig = {
     authStatusKey: 'isAuthenticated',
   }
 }
+
+export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
