@@ -6,8 +6,7 @@ import { StorageService } from "./storage.service";
 
 
 @NgModule({
-  declarations: [
-  ],
+  declarations: [],
   imports: [
     CommonModule,
   ],

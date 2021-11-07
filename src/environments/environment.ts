@@ -3,7 +3,18 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  api: {
+    signUp: 'https://demo-api.now.sh/users',
+    login: '/login',
+    verifyAuth: '/verify-authentication',
+    logout: '/logout',
+    checkEmail: '/check-email',
+  },
+  storage: {
+    emailsKey: 'recognizedEmails',
+    authStatusKey: 'isAuthenticated',
+  }
 };
 
 /*

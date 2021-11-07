@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import {
   HttpRequest,
   HttpHandler,
@@ -9,14 +9,12 @@ import {
 import { Observable, of } from 'rxjs';
 import { delay, tap } from 'rxjs/operators';
 import { EmailCheckData, LoginData } from '../types';
-import { APP_CONFIG } from '../core/config';
-import { AppConfig } from '../types/app-config';
 import { StorageService } from './storage.service';
+import { environment } from './../../environments/environment';
 
 @Injectable()
 export class ResponseInterceptor implements HttpInterceptor {
   constructor(
-    @Inject(APP_CONFIG) private config: AppConfig,
     private storage: StorageService
   ) {}
 
@@ -25,7 +23,7 @@ export class ResponseInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<unknown>> {
     // Emulates login API response.
-    if (request?.url.includes(this.config.api.login)) {
+    if (request?.url.includes(environment.api.login)) {
       const data = request.body as LoginData;
       const isSuccess = this.storage.emails.includes(data.email);
       this.storage.authStatus = isSuccess;
@@ -38,7 +36,7 @@ export class ResponseInterceptor implements HttpInterceptor {
     }
 
     // Emulates logout API response.
-    if (request?.url.includes(this.config.api.logout)) {
+    if (request?.url.includes(environment.api.logout)) {
       this.storage.authStatus = false;
       return of(
         new HttpResponse({
@@ -49,7 +47,7 @@ export class ResponseInterceptor implements HttpInterceptor {
     }
 
     // Emulates email uniqueness check API response.
-    if (request?.url.includes(this.config.api.checkEmail)) {
+    if (request?.url.includes(environment.api.checkEmail)) {
       const data = request.body as EmailCheckData;
       const isUnique = !this.storage.emails.includes(data.email);
       return of(
@@ -64,7 +62,7 @@ export class ResponseInterceptor implements HttpInterceptor {
     }
 
     // Emulates authentication check API response.
-    if (request?.url.includes(this.config.api.verifyAuth)) {
+    if (request?.url.includes(environment.api.verifyAuth)) {
       // 'delay' is used to simulate network delay
       return of(
         new HttpResponse({
@@ -78,7 +76,7 @@ export class ResponseInterceptor implements HttpInterceptor {
       tap((event: HttpEvent<any>) => {
         // NOTE: This code is for _demonstration_ only!
         // It is used to enable demonstration of login validation
-        if (event instanceof HttpResponse && request.url?.includes(this.config.api.signUp)) {
+        if (event instanceof HttpResponse && request.url?.includes(environment.api.signUp)) {
           const { email } = event.body;
           this.storage.addEmail(email);
         }
