@@ -1,22 +1,14 @@
 import { TestBed } from '@angular/core/testing';
-import { APP_CONFIG } from '../core/config';
-
 import { StorageService } from './storage.service';
+import { environment } from './../../environments/environment';
 
 describe('StorageService', () => {
   let service: StorageService;
-  const mockConfig = {
-    storage: {
-      emailsKey: 'recognizedEmails',
-      authStatusKey: 'isAuthenticated',
-    }
-  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [
         StorageService,
-        { provide: APP_CONFIG, useValue: mockConfig }
       ]
     });
     service = TestBed.inject(StorageService);
@@ -30,14 +22,14 @@ describe('StorageService', () => {
     spyOn(localStorage, 'setItem');
     service.authStatus = true;
 
-    expect(localStorage.setItem).toHaveBeenCalledWith(mockConfig.storage.authStatusKey, 'true');
+    expect(localStorage.setItem).toHaveBeenCalledWith(environment.storage.authStatusKey, 'true');
   });
 
   it('should get authStatus', () => {
     spyOn(localStorage, 'getItem').and.returnValue('true');
     const status = service.authStatus;
 
-    expect(localStorage.getItem).toHaveBeenCalledWith(mockConfig.storage.authStatusKey);
+    expect(localStorage.getItem).toHaveBeenCalledWith(environment.storage.authStatusKey);
     expect(status).toBeTrue();
   });
 
@@ -45,7 +37,7 @@ describe('StorageService', () => {
     spyOn(localStorage, 'getItem').and.returnValue('b@b.com,y@y.com');
 
     expect(service.emails).toEqual(['b@b.com', 'y@y.com']);
-    expect(localStorage.getItem).toHaveBeenCalledWith(mockConfig.storage.emailsKey);
+    expect(localStorage.getItem).toHaveBeenCalledWith(environment.storage.emailsKey);
   });
 
   describe('addEmail', () => {
@@ -59,7 +51,7 @@ describe('StorageService', () => {
       spyOn(localStorage, 'setItem');
       expect(service.addEmail('b@b.com')).toBeTrue();
       expect(localStorage.setItem).toHaveBeenCalledWith(
-        mockConfig.storage.emailsKey,
+        environment.storage.emailsKey,
         'x@x.com,y@y.com,b@b.com'
       );
     });

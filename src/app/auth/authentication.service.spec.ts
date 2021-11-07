@@ -1,22 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 import { AuthenticationService } from './authentication.service';
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
-import { APP_CONFIG } from '../core/config';
+import { environment } from './../../environments/environment';
 import { LoginData, SignUpData, SignUpResponseData, StateCheckResponseData } from '../types';
 
 
 describe('AuthenticationService', () => {
   let service: AuthenticationService;
   let httpMock: HttpTestingController;
-  const mockConfig = {
-    api: {
-      signUp: '/sign-up',
-      login: '/login',
-      verifyAuth: '/verify-authentication',
-      logout: '/logout',
-      checkEmail: '/check-email',
-    }
-  };
 
   beforeEach(() => {
 
@@ -24,7 +15,6 @@ describe('AuthenticationService', () => {
       imports: [HttpClientTestingModule],
       providers: [
         AuthenticationService,
-        { provide: APP_CONFIG, useValue: mockConfig }
       ],
     });
     service = TestBed.inject(AuthenticationService);
@@ -49,7 +39,7 @@ describe('AuthenticationService', () => {
       expect(response).toEqual(responseData)
       done();
     });
-    const req = httpMock.expectOne(mockConfig.api.signUp);
+    const req = httpMock.expectOne(environment.api.signUp);
 		expect(req.request.method).toEqual('POST');
 		expect(req.request.body).toEqual(data);
 		req.flush(responseData);
@@ -63,7 +53,7 @@ describe('AuthenticationService', () => {
       expect(service.isLoggedIn).toBeTrue();
       done();
     });
-    const req = httpMock.expectOne(mockConfig.api.login);
+    const req = httpMock.expectOne(environment.api.login);
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual(data);
     req.flush(responseData);
@@ -77,7 +67,7 @@ describe('AuthenticationService', () => {
       expect(service.isLoggedIn).toBeFalse();
       done();
     });
-    const req = httpMock.expectOne(mockConfig.api.logout);
+    const req = httpMock.expectOne(environment.api.logout);
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual({});
     req.flush(responseData);
@@ -90,7 +80,7 @@ describe('AuthenticationService', () => {
       expect(service.isLoggedIn).toBeTrue();
       done();
     });
-    const req = httpMock.expectOne(mockConfig.api.verifyAuth);
+    const req = httpMock.expectOne(environment.api.verifyAuth);
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual({});
     req.flush(responseData);
@@ -103,7 +93,7 @@ describe('AuthenticationService', () => {
       expect(uniquenessStatus).toBeTrue();
       done();
     });
-    const req = httpMock.expectOne(mockConfig.api.checkEmail);
+    const req = httpMock.expectOne(environment.api.checkEmail);
     expect(req.request.method).toEqual('POST');
     expect(req.request.body).toEqual({ email: testEmail});
     req.flush(responseData);

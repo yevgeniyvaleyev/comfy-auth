@@ -1,24 +1,22 @@
 import { isPlatformBrowser } from '@angular/common';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { APP_CONFIG } from '../core/config';
-import { AppConfig } from '../types/app-config';
+import { environment } from './../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
   constructor(
-    @Inject(APP_CONFIG) private config: AppConfig,
     @Inject(PLATFORM_ID) private platformId: Object,
     ) {}
 
   public set authStatus(isAuthenticated: boolean) {
-    const { authStatusKey } = this.config.storage;
+    const { authStatusKey } = environment.storage;
     localStorage.setItem(authStatusKey, String(isAuthenticated));
   }
 
   public get authStatus(): boolean {
-    const { authStatusKey } = this.config.storage;
+    const { authStatusKey } = environment.storage;
     if (!isPlatformBrowser(this.platformId)) {
       // needed for SSR
       return false;
@@ -27,7 +25,7 @@ export class StorageService {
   }
 
   public addEmail(email: string): boolean {
-    const { emailsKey } = this.config.storage;
+    const { emailsKey } = environment.storage;
 
     if (this.emails.includes(email)) {
       return false;
@@ -40,7 +38,7 @@ export class StorageService {
   }
 
   public get emails(): string[] {
-    const { emailsKey } = this.config.storage;
+    const { emailsKey } = environment.storage;
     const emailsExpression = localStorage.getItem(emailsKey);
     const emails = !!emailsExpression
       ? emailsExpression.split(',')
