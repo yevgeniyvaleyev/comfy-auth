@@ -2,20 +2,13 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-export const environment = {
+import { global_environment } from './global';
+import * as deepmerge from 'deepmerge';
+import { AppConfig } from './types';
+
+export const environment: AppConfig = deepmerge.all([{}, global_environment, {
   production: false,
-  api: {
-    signUp: 'https://demo-api.now.sh/users',
-    login: '/login',
-    verifyAuth: '/verify-authentication',
-    logout: '/logout',
-    checkEmail: '/check-email',
-  },
-  storage: {
-    emailsKey: 'recognizedEmails',
-    authStatusKey: 'isAuthenticated',
-  }
-};
+}]) as AppConfig;
 
 /*
  * For easier debugging in development mode, you can import the following file
