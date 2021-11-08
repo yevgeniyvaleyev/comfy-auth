@@ -1,8 +1,7 @@
+import { AppConfig } from "./types";
 
-import { AppConfig } from '../types/app-config';
-import { InjectionToken } from '@angular/core';
-
-export const APP_CONFIG_DATA: AppConfig = {
+export const global_environment: AppConfig = {
+  production: false,
   api: {
     signUp: 'https://demo-api.now.sh/users',
     login: '/login',
@@ -14,6 +13,4 @@ export const APP_CONFIG_DATA: AppConfig = {
     emailsKey: 'recognizedEmails',
     authStatusKey: 'isAuthenticated',
   }
-}
-
-export const APP_CONFIG = new InjectionToken<AppConfig>('app.config');
+};

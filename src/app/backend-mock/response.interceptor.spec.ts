@@ -5,9 +5,10 @@ import {
 } from '@angular/common/http/testing';
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
-import { APP_CONFIG } from '../core/config';
 import { StorageService } from './storage.service';
 import { LoginData, SignUpData, SignUpResponseData, StateCheckResponseData } from '../types';
+import { environment } from './../../environments/environment';
+
 
 import { ResponseInterceptor } from './response.interceptor';
 
@@ -15,15 +16,6 @@ describe('ResponseInterceptor', () => {
   let mockStorageService: StorageService;
   let http: HttpClient;
   let httpMock: HttpTestingController;
-  const mockConfig = {
-    api: {
-      signUp: '/sign-up',
-      login: '/login',
-      verifyAuth: '/verify-authentication',
-      logout: '/logout',
-      checkEmail: '/check-email',
-    },
-  };
 
   beforeEach(() => {
     mockStorageService = {
@@ -39,7 +31,6 @@ describe('ResponseInterceptor', () => {
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
       providers: [
-        { provide: APP_CONFIG, useValue: mockConfig },
         { provide: StorageService, useValue: mockStorageService },
         {
           provide: HTTP_INTERCEPTORS,
@@ -67,7 +58,7 @@ describe('ResponseInterceptor', () => {
     it('should return successful login mocked response', (done) => {
       spyOnProperty(mockStorageService, 'emails').and.returnValue(['a@a.com']);
       http
-        .post<StateCheckResponseData>(mockConfig.api.login, loginData)
+        .post<StateCheckResponseData>(environment.api.login, loginData)
         .subscribe((response: StateCheckResponseData) => {
           expect(response.success).toBeTrue();
           done();
@@ -77,7 +68,7 @@ describe('ResponseInterceptor', () => {
     it('should return fail login mocked response', (done) => {
       spyOnProperty(mockStorageService, 'emails').and.returnValue(['']);
       http
-        .post<StateCheckResponseData>(mockConfig.api.login, loginData)
+        .post<StateCheckResponseData>(environment.api.login, loginData)
         .subscribe((response: StateCheckResponseData) => {
           expect(response.success).toBeFalse();
           done();
@@ -88,7 +79,7 @@ describe('ResponseInterceptor', () => {
   describe('logout', () => {
     it('should return successful logout mocked response', (done) => {
       http
-        .post<StateCheckResponseData>(mockConfig.api.logout, {})
+        .post<StateCheckResponseData>(environment.api.logout, {})
         .subscribe((response: StateCheckResponseData) => {
           expect(response.success).toBeTrue();
           done();
@@ -100,7 +91,7 @@ describe('ResponseInterceptor', () => {
     it('should return successful checkEmail mocked response', (done) => {
       spyOnProperty(mockStorageService, 'emails').and.returnValue(['x@x.com']);
       http
-        .post<StateCheckResponseData>(mockConfig.api.checkEmail, {
+        .post<StateCheckResponseData>(environment.api.checkEmail, {
           email: 'new@a.com',
         })
         .subscribe((response: StateCheckResponseData) => {
@@ -114,7 +105,7 @@ describe('ResponseInterceptor', () => {
         'registered@x.com',
       ]);
       http
-        .post<StateCheckResponseData>(mockConfig.api.checkEmail, {
+        .post<StateCheckResponseData>(environment.api.checkEmail, {
           email: 'registered@x.com',
         })
         .subscribe((response: StateCheckResponseData) => {
@@ -128,7 +119,7 @@ describe('ResponseInterceptor', () => {
     it('should return successful verifyAuth mocked response', (done) => {
       spyOnProperty(mockStorageService, 'authStatus').and.returnValue(true);
       http
-        .post<StateCheckResponseData>(mockConfig.api.verifyAuth, {})
+        .post<StateCheckResponseData>(environment.api.verifyAuth, {})
         .subscribe((response: StateCheckResponseData) => {
           expect(response.success).toBeTrue();
           done();
@@ -138,7 +129,7 @@ describe('ResponseInterceptor', () => {
     it('should return fail verifyAuth mocked response', (done) => {
       spyOnProperty(mockStorageService, 'authStatus').and.returnValue(false);
       http
-        .post<StateCheckResponseData>(mockConfig.api.verifyAuth, {})
+        .post<StateCheckResponseData>(environment.api.verifyAuth, {})
         .subscribe((response: StateCheckResponseData) => {
           expect(response.success).toBeFalse();
           done();
@@ -160,13 +151,13 @@ describe('ResponseInterceptor', () => {
       };
 
       spyOn(mockStorageService, 'addEmail');
-      http.post<SignUpResponseData>(mockConfig.api.signUp, data).subscribe((res: SignUpResponseData) => {
+      http.post<SignUpResponseData>(environment.api.signUp, data).subscribe((res: SignUpResponseData) => {
         done();
         expect(mockStorageService.addEmail).toHaveBeenCalledWith(responseData.email);
         expect(res.email).toEqual(data.email);
       });
 
-      const req = httpMock.expectOne(mockConfig.api.signUp);
+      const req = httpMock.expectOne(environment.api.signUp);
 
       expect(req.request.method).toEqual('POST');
       req.flush(responseData);
