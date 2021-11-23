@@ -9,6 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { UserValidators } from 'src/app/auth/validators/user.validator';
 import { AuthenticationService } from './authentication.service';
+import * as fromApp from '../store/app.reducer';
+import { Store } from '@ngrx/store';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -51,7 +54,8 @@ export class SignUpComponent implements OnInit {
     private authService: AuthenticationService,
     private router: Router,
     private validators: UserValidators,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private store: Store<fromApp.AppState>
   ) {}
 
   public ngOnInit() {
