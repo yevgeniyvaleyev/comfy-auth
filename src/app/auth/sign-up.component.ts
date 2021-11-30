@@ -6,11 +6,14 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
+import { select, Store } from '@ngrx/store';
+
 import { UserValidators } from 'src/app/auth/validators/user.validator';
 import { AuthenticationService } from './authentication.service';
 import * as fromApp from '../store/app.reducer';
-import { Store } from '@ngrx/store';
+import * as SingUpActions from './store/sign-up.actions';
+import { SignUpState } from './store/sign-up.reducer';
 
 
 @Component({
@@ -59,6 +62,16 @@ export class SignUpComponent implements OnInit {
   ) {}
 
   public ngOnInit() {
+    this.store.pipe(select('signUp')).subscribe((state: SignUpState) => {
+      const isValidEmail = (this.form.value.email === state.email) && !!this.form.value.email;
+      this.isInProgress = state.isInProgress;
+      this.hasRequestError = state.hasError && !state.isInProgress;
+
+      if (!state.isInProgress && !state.hasError && isValidEmail) {
+        this.router.navigate(['../login'], { relativeTo: this.route });
+      }
+    });
+
     if (this.authService.isLoggedIn) {
       this.router.navigate(['/']);
     }
@@ -84,22 +97,6 @@ export class SignUpComponent implements OnInit {
     if (this.form.invalid) {
       return;
     }
-    this.hasRequestError = false;
-    this.isInProgress = true;
-    this.authService
-      .signUp(this.form.value)
-      .pipe(
-        finalize(() => {
-          this.isInProgress = false;
-        })
-      )
-      .subscribe(
-        () => {
-          this.router.navigate(['../login'], { relativeTo: this.route });
-        },
-        () => {
-          this.hasRequestError = true;
-        }
-      );
+    this.store.dispatch(SingUpActions.SignUpStart(this.form.value));
   }
 }

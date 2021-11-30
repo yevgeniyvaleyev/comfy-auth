@@ -12,7 +12,9 @@ import { BackendMockModule } from './backend-mock/backend-mock.module';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 import * as fromApp from './store/app.reducer';
+import { SignUpEffects } from './auth/store/auth.effects';
 import { environment } from 'src/environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
@@ -25,6 +27,7 @@ import { environment } from 'src/environments/environment';
     CoreModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     StoreDevtoolsModule.instrument({ logOnly: environment.production }),
+    EffectsModule.forRoot([SignUpEffects]),
     StoreRouterConnectingModule.forRoot(),
     StoreModule.forRoot(fromApp.appReducer),
     BrowserAnimationsModule,

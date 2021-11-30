@@ -4,13 +4,13 @@ import * as SingUpActions from './sign-up.actions';
 export interface SignUpState {
   isInProgress: boolean;
   hasError: boolean;
-  currentEmail: string;
+  email: string;
 }
 
 const initialState: SignUpState = {
   isInProgress: false,
   hasError: false,
-  currentEmail: '',
+  email: '',
 };
 
 export const signUpReducer = createReducer(
@@ -21,7 +21,7 @@ export const signUpReducer = createReducer(
       ...state,
       isInProgress: true,
       hasError: false,
-      currentEmail: action.email,
+      email: action.email,
     })
   ),
   on(
