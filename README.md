@@ -4,21 +4,27 @@
 
 ## Motivation
 
-This application demonstrates possible implementation of authentication functionality 
+This application demonstrates possible implementation of authentication functionality
 in client app using Angular framework.
 The application contains of:
-- __sign up__ (`/auth/sign-up`) screen, which allows user to fill, validate and send a sign up form. 
-- __login__ (`/auth/login`) screen, allows user to login using registered email and password.
-- __dashboard__ screen, appears when user successfully logged in and congratulates the user with this fact.
-- __navigation__ has action buttons to login, sign up and logout.
+
+- **sign up** (`/auth/sign-up`) screen, which allows user to fill, validate and send a sign up form.
+- **login** (`/auth/login`) screen, allows user to login using registered email and password.
+- **dashboard** screen, appears when user successfully logged in and congratulates the user with this fact.
+- **navigation** has action buttons to login, sign up and logout.
 
 ## Demo
-Please check out deployed application at [comfy-auth.herokuapp.com](https://comfy-auth.herokuapp.com/), [(develop)](http://develop-comfy-auth.herokuapp.com/)
-## Form validation
-Login and sign up forms contain various of validators like standard (`required`, `minLength` etc) and custom
-synchronous and asynchronous validators. 
 
-__Custom Validators__
+_not available atm_
+Please check out deployed application at [comfy-auth.herokuapp.com](https://comfy-auth.herokuapp.com/), [(develop)](http://develop-comfy-auth.herokuapp.com/)
+
+## Form validation
+
+Login and sign up forms contain various of validators like standard (`required`, `minLength` etc) and custom
+synchronous and asynchronous validators.
+
+**Custom Validators**
+
 - `correctName` checks whether a text contains only lowercase letters with first capital;
 - `upperAndLowerCase` checks whether text contains lower and uppercase letters;
 - `preventUserNamesInPassword` checks whether password field contains entered last or first name;
@@ -26,19 +32,23 @@ __Custom Validators__
 - `isUniqueEmail` _async_ validator which does an API call to check whether entered email is already registered;
 
 ## Authentication
-It is only possible to login by email used in sign up form and password (random). 
-The Authentication is made for demonstration purpose and does not contain real API which would allow real secure authentication. 
+
+It is only possible to login by email used in sign up form and password (random).
+The Authentication is made for demonstration purpose and does not contain real API which would allow real secure authentication.
 Protection of certain routes of the application is done by authentication guards and authentication service.
 
 ## Mock API
-To make this application as close as possible to production ready state it was decided to use request interceptor to emulate missing APIs. 
+
+To make this application as close as possible to production ready state it was decided to use request interceptor to emulate missing APIs.
 It allows to perform login, logout, email uniqueness check, authentication check and extra logic for sign up. The interceptor uses LocalStorage to persist authentication and registration data.
-This app can be potentially used with real API when this interceptor is disabled. 
+This app can be potentially used with real API when this interceptor is disabled.
 
 ## Configuration
+
 Configuration consists of `api` and `storage` sections which contain values for api calls and storage keys accordingly.
 
 ## Theme
+
 This application uses angular material library for components, typography and colors.
 Bootstrap is used for grid system and positioning, it's used partially.
 
@@ -60,4 +70,4 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 ## Technologies
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
+Angular 13.0.0.
