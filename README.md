@@ -70,4 +70,4 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 
 ## Technologies
 
-Angular 14.0.0.
+Angular 15.0.0.

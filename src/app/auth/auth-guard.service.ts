@@ -1,23 +1,22 @@
 import { Injectable } from '@angular/core';
 import {
-  Router,
-  CanActivate,
-  RouterStateSnapshot,
   ActivatedRouteSnapshot,
+  Router,
+  RouterStateSnapshot,
 } from '@angular/router';
 import { tap } from 'rxjs/operators';
 import { AuthenticationService } from './authentication.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class AuthGuardService implements CanActivate {
+export class AuthGuardService {
   constructor(
     private router: Router,
     private authService: AuthenticationService
   ) {}
 
-  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+  canActivate(_: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     return this.authService.verifyLoginStatus().pipe(
       tap((isAuthenticated: boolean) => {
         if (!isAuthenticated) {
