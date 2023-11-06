@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { UserValidators } from 'src/app/auth/validators/user.validator';
+import { LoginData } from '../types';
 import { AuthenticationService } from './authentication.service';
 
 @Component({
@@ -49,7 +50,7 @@ export class LoginComponent implements OnInit {
     this.hasRequestError = false;
     this.isInProgress = true;
     this.authService
-      .login(this.form.value)
+      .login(this.form.value as LoginData)
       .pipe(
         finalize(() => {
           this.isInProgress = false;

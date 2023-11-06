@@ -8,6 +8,7 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { finalize } from 'rxjs/operators';
 import { UserValidators } from 'src/app/auth/validators/user.validator';
+import { SignUpData } from '../types';
 import { AuthenticationService } from './authentication.service';
 
 @Component({
@@ -83,7 +84,7 @@ export class SignUpComponent implements OnInit {
     this.hasRequestError = false;
     this.isInProgress = true;
     this.authService
-      .signUp(this.form.value)
+      .signUp(this.form.value as SignUpData)
       .pipe(
         finalize(() => {
           this.isInProgress = false;

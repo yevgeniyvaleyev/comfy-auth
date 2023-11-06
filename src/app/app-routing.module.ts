@@ -6,7 +6,8 @@ const routes: Routes = [
   {
     path: '',
     canActivate: [AuthGuardService],
-    loadChildren: () => import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
+    loadChildren: () =>
+      import('./dashboard/dashboard.module').then((m) => m.DashboardModule),
   },
   {
     path: 'auth',
@@ -17,7 +18,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      initialNavigation: 'enabled',
+      initialNavigation: 'enabledNonBlocking',
     }),
   ],
   exports: [RouterModule],
