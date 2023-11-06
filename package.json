@@ -36,7 +36,7 @@
     "@angular/platform-server": "^13.0.0",
     "@angular/router": "^13.0.0",
     "@nguniversal/express-engine": "^13.0.0",
-    "bootstrap": "^5.1.2",
+    "bootstrap": "^5.3.2",
     "deepmerge": "^4.2.2",
     "express": "^4.17.1",
     "localstorage-polyfill": "^1.0.1",
@@ -46,7 +46,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^13.0.0",
-    "@angular/cli": "^13.0.0",
+    "@angular/cli": "^13.3.11",
     "@angular/compiler-cli": "^13.0.0",
     "@nguniversal/builders": "^14.0.0",
     "@types/express": "^4.17.0",
