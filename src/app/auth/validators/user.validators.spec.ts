@@ -94,7 +94,7 @@ describe('AuthGuardService', () => {
         expect(UserValidators.correctName(control)).toEqual({
           correctName: true,
         });
-      })
+      });
     });
   });
 
@@ -127,12 +127,23 @@ describe('AuthGuardService', () => {
     interface FieldsData {
       [key: string]: string;
     }
-    const getControl = (fieldsData: FieldsData, errorFn: any): AbstractControl => ({
-      get: (field: keyof FieldsData) => {
-        const value = fieldsData[field] ?? '';
-        return value ? { value, setErrors: (...args) => { errorFn(...args) } } : null;
-      },
-    } as AbstractControl);
+    const getControl = (
+      fieldsData: FieldsData,
+      errorFn: any
+    ): AbstractControl =>
+      ({
+        get: (field: keyof FieldsData) => {
+          const value = fieldsData[field] ?? '';
+          return value
+            ? {
+                value,
+                setErrors: (...args: any[]) => {
+                  errorFn(...args);
+                },
+              }
+            : null;
+        },
+      } as AbstractControl);
 
     it('should validate fake form control works as expected', () => {
       const fieldsData: FieldsData = {
@@ -172,7 +183,9 @@ describe('AuthGuardService', () => {
       const control = getControl(fieldsData, errorTestObj.errorFn);
 
       UserValidators.preventUserNamesInPassword(control);
-      expect(errorTestObj.errorFn).toHaveBeenCalledWith({ containsFirstName: true });
+      expect(errorTestObj.errorFn).toHaveBeenCalledWith({
+        containsFirstName: true,
+      });
     });
 
     it('should return invalidaton data when password contains last name', () => {
@@ -186,8 +199,9 @@ describe('AuthGuardService', () => {
       const control = getControl(fieldsData, errorTestObj.errorFn);
 
       UserValidators.preventUserNamesInPassword(control);
-      expect(errorTestObj.errorFn).toHaveBeenCalledWith({ containsLastName: true });
+      expect(errorTestObj.errorFn).toHaveBeenCalledWith({
+        containsLastName: true,
+      });
     });
-
   });
 });
