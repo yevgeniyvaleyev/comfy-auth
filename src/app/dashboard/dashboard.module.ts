@@ -1,14 +1,14 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { SharedModule } from '../shared/shared.module';
-import { DashboardComponent } from './dashboard.component';
+import { MatCardModule } from '@angular/material/card';
 import { RouterModule } from '@angular/router';
+import { DashboardComponent } from './dashboard.component';
 
 @NgModule({
-  declarations: [
-    DashboardComponent,
-  ],
+  declarations: [DashboardComponent],
   imports: [
-    SharedModule,
+    CommonModule,
+    MatCardModule,
     RouterModule.forChild([{ path: '', component: DashboardComponent }]),
   ],
 })

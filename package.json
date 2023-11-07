@@ -1,6 +1,6 @@
 {
   "name": "comfy-auth",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "author": "Yevgeniy Valeyev",
   "engines": {
     "node": "18.16.0",

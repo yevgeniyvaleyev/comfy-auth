@@ -1,19 +1,17 @@
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
-import { BackendMockModule } from './backend-mock/backend-mock.module';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserModule } from '@angular/platform-browser';
-import { CoreModule } from './core/core.module';
+import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { SharedModule } from './shared/shared.module';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+import { AppComponent } from './app.component';
+import { BackendMockModule } from './backend-mock/backend-mock.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
-  declarations: [
-    AppComponent,
-  ],
+  declarations: [AppComponent],
   imports: [
-    SharedModule,
+    CommonModule,
     HttpClientModule,
     CoreModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
@@ -22,6 +20,6 @@ import { SharedModule } from './shared/shared.module';
     AppRoutingModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
